@@ -9,7 +9,7 @@ import Icon, { type IconName } from "@/components/Icon";
 import ThemeToggle from "@/components/ThemeToggle";
 
 const LINKS = [
-  { href: "/", label: "Overview", icon: "grid" },
+  { href: "/dashboard", label: "Overview", icon: "grid" },
   { href: "/company", label: "Organization", icon: "building" },
   { href: "/agents", label: "AI workforce", icon: "agents" },
   { href: "/providers", label: "Providers & models", icon: "provider" },
@@ -57,7 +57,7 @@ export default function NavBar() {
       <div className="nav-label">Command center</div>
       <nav aria-label="Primary navigation">
         {LINKS.map((l) => {
-          const active = l.href === "/" ? pathname === "/" : pathname.startsWith(l.href);
+          const active = pathname === l.href || pathname.startsWith(`${l.href}/`);
           return (
             <Link
               key={l.href}

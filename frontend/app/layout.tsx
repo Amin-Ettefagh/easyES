@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "easyES — AI-Native Company",
   description:
-    "Control room for a human + AI organization: agents, workflows, and live execution.",
+    "Human + AI organization execution platform for roles, agents, workflows, evaluations, and live delivery loops.",
 };
 
 export default function RootLayout({

@@ -237,7 +237,7 @@ export default function ControlRoomPage() {
       <div className="page-head">
         <div>
           <div className="muted mono" style={{ fontSize: "0.75rem" }}>
-            <Link href="/">← Dashboard</Link> · {project.key}
+            <Link href="/dashboard">← Dashboard</Link> · {project.key}
           </div>
           <h1 style={{ marginTop: "0.35rem" }}>{project.name}</h1>
           <div className="subtitle">{project.idea || "—"}</div>

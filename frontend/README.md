@@ -4,7 +4,8 @@ Next.js 14 (App Router) + TypeScript control room for easyES.
 It talks to the Django REST backend at `/api/v1` and renders:
 
 - **Login** (`/login`) — JWT sign-in (demo: `amin` / `123456`).
-- **Dashboard** (`/`) — org summary, projects, recent runs, and a "New Project" form.
+- **Landing** (`/`) — public product introduction.
+- **Dashboard** (`/dashboard`) — org summary, projects, recent runs, and a "New Project" form.
 - **Company** (`/company`) — org units, roles (with capabilities), and actors (human + AI).
 - **Agents** (`/agents`) — per-agent config editor: model, temperature, budgets, and a
   prominent **system-prompt editor** (each save creates a new immutable prompt version).

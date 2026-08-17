@@ -16,7 +16,7 @@ export default function LoginPage() {
 
   // Already signed in? Skip straight to the dashboard.
   useEffect(() => {
-    if (isAuthenticated()) router.replace("/");
+    if (isAuthenticated()) router.replace("/dashboard");
   }, [router]);
 
   async function submit(e: React.FormEvent) {
@@ -25,7 +25,7 @@ export default function LoginPage() {
     setError(null);
     try {
       await login(username.trim(), password);
-      router.replace("/");
+      router.replace("/dashboard");
     } catch (err) {
       setError(err);
     } finally {

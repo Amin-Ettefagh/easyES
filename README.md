@@ -176,6 +176,7 @@ DemoPrompt.md   Original build/demo specification
 | [docs/TESTING.md](docs/TESTING.md) | Test strategy |
 | [docs/ROADMAP.md](docs/ROADMAP.md) | Roadmap |
 | [docs/RND_REFERENCES.md](docs/RND_REFERENCES.md) | R&D references |
+| [docs/GITHUB_ABOUT.md](docs/GITHUB_ABOUT.md) | GitHub repository About text and topics |
 | [docs/adr/](docs/adr/) | Architecture decision records |
 
 ## Local Development

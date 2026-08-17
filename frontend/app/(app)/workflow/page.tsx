@@ -69,7 +69,7 @@ export default function WorkflowPage() {
           }}
         />
       ) : (
-        <div className="studio-first-workflow"><span>⌁</span><h1>Build your first workflow</h1><p>{workspaces.length ? "Connect agents, decisions and quality gates inside the selected workspace." : "Create a workspace from Overview first, then add its workflows."}</p><button className="btn primary big" onClick={() => setCreating(true)} disabled={!workspaces.length}>Create workflow</button></div>
+        <div className="studio-first-workflow"><span>⌁</span><h1>Build your first workflow</h1><p>{workspaces.length ? "Connect agents, decisions and quality gates inside the selected workspace." : "Create a workspace from Dashboard first, then add its workflows."}</p><button className="btn primary big" onClick={() => setCreating(true)} disabled={!workspaces.length}>Create workflow</button></div>
       )}
       {creating && <NewWorkflowModal workspaces={workspaces} workspaceUuid={workspaceUuid || workspaces[0]?.uuid || ""} onClose={() => setCreating(false)} onCreated={(created, saved) => { setWorkspaceUuid(created.workspace || ""); setWorkflows((current) => [created, ...current]); setGraph(saved); setCreating(false); }} />}
     </div>
