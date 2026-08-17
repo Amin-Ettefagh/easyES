@@ -1,0 +1,38 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+*.sqlite3
+db.sqlite3
+backend/staticfiles/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node / Next.js
+node_modules/
+frontend/.next/
+frontend/out/
+frontend/next-env.d.ts
+frontend/.turbo/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+frontend/.env.local
+!frontend/.env.local.example
+
+# Runtime data (isolated project workspaces)
+data/workspaces/
+
+# Generated local aggregates
+combined_text_documents.txt
+
+# Local assistant/editor state
+.claude/
+
+# OS / editor
+.DS_Store
+Thumbs.db

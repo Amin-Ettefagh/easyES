@@ -1,0 +1,72 @@
+# easyES — full stack.
+#
+#   docker compose up --build
+#
+# Brings up: postgres (db) + Django API (host :18120) + Next.js UI
+# (host :18121). The backend auto-migrates, seeds the "amin" demo company,
+# and (optionally) runs one workflow end-to-end on boot.
+#
+# Then open http://localhost:18121 and log in with  amin / 123456.
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: easyes
+      POSTGRES_USER: easyes
+      POSTGRES_PASSWORD: easyes
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U easyes -d easyes"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    # Not published to the host by default; only the backend needs it.
+    expose:
+      - "5432"
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: postgres://easyes:easyes@db:5432/easyes
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-dev-insecure-easyes-change-this-before-production-2026}
+      DJANGO_DEBUG: ${DJANGO_DEBUG:-1}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-*}
+      EASYES_ENCRYPTION_KEY: ${EASYES_ENCRYPTION_KEY:-dev-demo-encryption-passphrase}
+      EASYES_ALLOW_DEMO_SEED: ${EASYES_ALLOW_DEMO_SEED:-1}
+      EASYES_EXECUTION_BACKEND: ${EASYES_EXECUTION_BACKEND:-thread}
+      EASYES_DEFAULT_PROVIDER: ${EASYES_DEFAULT_PROVIDER:-fake}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:18121,http://127.0.0.1:18121}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-http://localhost:18121,http://127.0.0.1:18121}
+      # Seed the demo company + login on boot. Set EASYES_RUN_DEMO=1 to also
+      # run one workflow end-to-end at startup.
+      EASYES_SEED: ${EASYES_SEED:-1}
+      EASYES_IMPORT_ROLE_CATALOG: ${EASYES_IMPORT_ROLE_CATALOG:-1}
+      EASYES_CATALOG_ORG: ${EASYES_CATALOG_ORG:-amin}
+      EASYES_RUN_DEMO: ${EASYES_RUN_DEMO:-0}
+      EASYES_DEMO_SCENARIO: ${EASYES_DEMO_SCENARIO:-fail_once}
+    ports:
+      - "${BACKEND_PORT:-18120}:8000"
+    volumes:
+      - workspaces:/app/../data/workspaces
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Browser calls stay same-origin; Next proxies them over Docker's network.
+        NEXT_PUBLIC_API_BASE: ${NEXT_PUBLIC_API_BASE:-/api/v1}
+        INTERNAL_API_BASE: ${INTERNAL_API_BASE:-http://backend:8000/api/v1}
+    ports:
+      - "${FRONTEND_PORT:-18121}:3000"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  workspaces:
